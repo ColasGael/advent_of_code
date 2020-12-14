@@ -1,4 +1,4 @@
-# Advent of COde
+# Advent of Code Solutions
 
 My solutions for the Advent of Code puzzles.
 
