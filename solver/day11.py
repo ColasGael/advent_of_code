@@ -99,14 +99,16 @@ def part1_transition_vectorized(seat_layout, occupancy_grid):
     return new_occupancy_grid
 
 
-def convolution2D(input_matrix, square_kernel):
-    n_rows, n_columns = input_matrix.shape
-    kernel_size = square_kernel.shape[0]
-    padding = (kernel_size - 1) // 2
-    input_matrix_padded = np.full((n_rows + 2*padding, n_columns + 2*padding), 0)
-    input_matrix_padded[padding:n_rows+padding, padding:n_columns+padding] = input_matrix
-    output_matrix = np.full(input_matrix.shape, 0.)
-    for i in range(n_rows):
-        for j in range(n_columns):
-            output_matrix[i, j] = np.sum(square_kernel * input_matrix_padded[i:i+kernel_size, j:j+kernel_size])
-    return output_matrix
+def convolution2D(matrix, kernel):
+    matrix_height, matrix_length = matrix.shape
+    kernel_heigth, kernel_length = kernel.shape
+
+    start_row, start_column = kernel_heigth // 2, kernel_length // 2
+    matrix_padded = np.full((matrix_height + kernel_heigth, matrix_length + kernel_length), 0)
+    matrix_padded[start_row:matrix_height+start_row, start_column:matrix_length+start_column] = matrix
+
+    result = np.full(matrix.shape, 0.)
+    for i in range(matrix_height):
+        for j in range(matrix_length):
+            result[i, j] = np.sum(kernel * matrix_padded[i:i+kernel_heigth, j:j+kernel_length])
+    return result
