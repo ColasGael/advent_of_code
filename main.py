@@ -31,13 +31,13 @@ def load_solution(solution_path):
     if os.path.isfile(solution_path):
         with open(solution_path, 'r') as input_file:
             input_lines = input_file.readlines()
-        part1_solution, part2_solution = int(input_lines[0]), int(input_lines[1])
+        part1_solution, part2_solution = input_lines[0].strip(), input_lines[1].strip()
     return part1_solution, part2_solution
 
 
 def check_answers(day_number, part1_answer, part2_answer, part1_solution=None, part2_solution=None):
-    print("Day {} Part 1: expected {} ; answered = {}".format(day_number, part1_solution, part1_answer))
-    print("Day {} Part 2: expected {} ; answered = {}".format(day_number, part2_solution, part2_answer))
+    print("Day {} Part 1: expected = {} ; answered = {}".format(day_number, part1_solution, part1_answer))
+    print("Day {} Part 2: expected = {} ; answered = {}".format(day_number, part2_solution, part2_answer))
 
 
 def main():

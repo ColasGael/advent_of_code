@@ -6,7 +6,7 @@ import numpy as np
 from day11 import convolution2D
 
 
-MOSTER_PATTERN = [
+MONSTER_PATTERN = [
     "..................#.",
     "#....##....##....###",
     ".#..#..#..#..#..#...",
@@ -19,7 +19,7 @@ def main(input_lines, pixel_0='.', pixel_1='#'):
     part1_answer = np.prod([puzzle[i, j] for i in (0, -1) for j in (0, -1)])
 
     final_image = merge_tiles(tiles, puzzle)
-    monster_image = parse_tile(MOSTER_PATTERN, pixel_0, pixel_1)
+    monster_image = parse_tile(MONSTER_PATTERN, pixel_0, pixel_1)
     # visualize(apply_rotation(np.flipud(final_image), 90), pixel_0, pixel_1)
     n_monsters = find_monsters(final_image, monster_image)
     part2_answer = np.sum(final_image) - n_monsters * np.sum(monster_image)
