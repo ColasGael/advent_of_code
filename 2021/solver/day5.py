@@ -66,7 +66,6 @@ def count_intersections(vent_lines, max_x, max_y, ignore_diagonal=False):
                 # Check if the vent line is intersecting with a previously added vent line
                 if intersections_map[y][x] == 1:
                     n_intersections += 1
-                    n_diagonal_intersections += 1
                 # Add the current vent line
                 intersections_map[y][x] += 1
                 y += slope
