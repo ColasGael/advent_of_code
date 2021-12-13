@@ -53,7 +53,6 @@ def part2_fuel_cost(horizontal_positions):
     Constraint: x is an int.
 
     The value that minimizes the sum of squared differences (L2-norm) is the: mean +/- 1
-    - the mean +-.
     '''
     mean = int(round(compute_mean(horizontal_positions)))
     min_fuel_cost = None
