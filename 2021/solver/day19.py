@@ -23,43 +23,43 @@ def parse_beacons(input_lines):
         elif "scanner" in input_line:
             sensors.append(set())
         else:
-            (x, y, z) = input_line.split(",")
-            beacon = (int(x), int(y), int(z))
+            coords = input_line.split(",")
+            beacon = (int(coords[0]), int(coords[1]), int(coords[2]))
             sensors[-1].add(beacon)
     return sensors
 
 
 COORDINATE_TRANSFORMS = [
-    # Rotation around x
-    lambda (x, y, z): (x, y, z),    # 0
-    lambda (x, y, z): (x, z, -y),   # 90
-    lambda (x, y, z): (x, -y, -z),  # 180
-    lambda (x, y, z): (x, -z, y),   # 270
-    # Flipping then rotation around -x
-    lambda (x, y, z): (-x, -y, z),  # 0
-    lambda (x, y, z): (-x, z, y),   # 90
-    lambda (x, y, z): (-x, y, -z),  # 180
-    lambda (x, y, z): (-x, -z, -y), # 270
-    # Rotation around y
-    lambda (x, y, z): (y, z, x),    # 0
-    lambda (x, y, z): (y, x, -z),   # 90
-    lambda (x, y, z): (y, -z, -x),  # 180
-    lambda (x, y, z): (y, -x, z),   # 270
-    # Flipping then rotation around -y
-    lambda (x, y, z): (-y, -z, x),  # 0
-    lambda (x, y, z): (-y, x, z),   # 90
-    lambda (x, y, z): (-y, z, -x),  # 180
-    lambda (x, y, z): (-y, -x, -z), # 270
-    # Rotation around z
-    lambda (x, y, z): (z, x, y),    # 0
-    lambda (x, y, z): (z, y, -x),   # 90
-    lambda (x, y, z): (z, -x, -y),  # 180
-    lambda (x, y, z): (z, -y, x),   # 270
-    # Flipping then rotation around -z
-    lambda (x, y, z): (-z, -x, y),  # 0
-    lambda (x, y, z): (-z, y, x),   # 90
-    lambda (x, y, z): (-z, x, -y),  # 180
-    lambda (x, y, z): (-z, -y, -x), # 270
+    # Rotation around coords[0]
+    lambda coords: (coords[0], coords[1], coords[2]),    # 0
+    lambda coords: (coords[0], coords[2], -coords[1]),   # 90
+    lambda coords: (coords[0], -coords[1], -coords[2]),  # 180
+    lambda coords: (coords[0], -coords[2], coords[1]),   # 270
+    # Flipping then rotation around -coords[0]
+    lambda coords: (-coords[0], -coords[1], coords[2]),  # 0
+    lambda coords: (-coords[0], coords[2], coords[1]),   # 90
+    lambda coords: (-coords[0], coords[1], -coords[2]),  # 180
+    lambda coords: (-coords[0], -coords[2], -coords[1]), # 270
+    # Rotation around coords[1]
+    lambda coords: (coords[1], coords[2], coords[0]),    # 0
+    lambda coords: (coords[1], coords[0], -coords[2]),   # 90
+    lambda coords: (coords[1], -coords[2], -coords[0]),  # 180
+    lambda coords: (coords[1], -coords[0], coords[2]),   # 270
+    # Flipping then rotation around -coords[1]
+    lambda coords: (-coords[1], -coords[2], coords[0]),  # 0
+    lambda coords: (-coords[1], coords[0], coords[2]),   # 90
+    lambda coords: (-coords[1], coords[2], -coords[0]),  # 180
+    lambda coords: (-coords[1], -coords[0], -coords[2]), # 270
+    # Rotation around coords[2]
+    lambda coords: (coords[2], coords[0], coords[1]),    # 0
+    lambda coords: (coords[2], coords[1], -coords[0]),   # 90
+    lambda coords: (coords[2], -coords[0], -coords[1]),  # 180
+    lambda coords: (coords[2], -coords[1], coords[0]),   # 270
+    # Flipping then rotation around -coords[2]
+    lambda coords: (-coords[2], -coords[0], coords[1]),  # 0
+    lambda coords: (-coords[2], coords[1], coords[0]),   # 90
+    lambda coords: (-coords[2], coords[0], -coords[1]),  # 180
+    lambda coords: (-coords[2], -coords[1], -coords[0]), # 270
 ]
 
 
@@ -67,7 +67,7 @@ def find_all_beacons(sensors, min_num_matching_beacons):
     # Indicate the sensor absolute pose
     sensor_positions = [None] * len(sensors)
 
-    # Store the sensors that have been located, but not yet compared with the unlocated sensors
+    # Store the sensors that have been located, but not coords[1]et compared with the unlocated sensors
     open_sensors = []
 
     # Use first sensor frame as reference frame
@@ -87,14 +87,12 @@ def find_all_beacons(sensors, min_num_matching_beacons):
 
                 offset = None
                 potential_offset_counts = {}
-                for current_beacon in current_sensor:
-                    current_x, current_y, current_z = current_beacon
-                    for rotated_beacon in rotated_sensor:
-                        rotated_x, rotated_y, rotated_z = rotated_beacon
+                for current_coords in current_sensor:
+                    for rotated_coords in rotated_sensor:
                         potential_offset = (
-                            current_x - rotated_x,
-                            current_y - rotated_y,
-                            current_z - rotated_z,
+                            current_coords[0] - rotated_coords[0],
+                            current_coords[1] - rotated_coords[1],
+                            current_coords[2] - rotated_coords[2],
                         )
                         if potential_offset not in potential_offset_counts:
                             potential_offset_counts[potential_offset] = 0
@@ -107,7 +105,7 @@ def find_all_beacons(sensors, min_num_matching_beacons):
                 if offset is not None:
                     sensor_positions[i] = offset
                     translated_sensor = set(list(map(
-                        lambda (x, y, z): (x + offset[0], y + offset[1], z + offset[2]),
+                        lambda coords: (coords[0] + offset[0], coords[1] + offset[1], coords[2] + offset[2]),
                         rotated_sensor)
                     ))
                     sensors[i] = translated_sensor
@@ -124,6 +122,6 @@ def find_all_beacons(sensors, min_num_matching_beacons):
 
 
 def manhattan_dist(point_1, point_2):
-    x_1, y_1, z_1 = point_1
-    x_2, y_2, z_2 = point_2
-    return abs(x_2 - x_1) + abs(y_2 - y_1) + abs(z_2 - z_1)
+    return (
+        abs(point_2[0] - point_1[0]) + abs(point_2[1] - point_1[1]) + abs(point_2[2] - point_1[2])
+    )

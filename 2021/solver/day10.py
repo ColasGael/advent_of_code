@@ -41,8 +41,10 @@ def check_chunks(input_lines):
 
     tot_syntax_error_score = compute_syntax_error_score(corrupted_lines_illegal_chars)
 
-    autocomplete_scores = map(lambda missing_chars: compute_autocomplete_score(missing_chars),
-                              incomplete_lines_missing_chars)
+    autocomplete_scores = list(map(
+        lambda missing_chars: compute_autocomplete_score(missing_chars),
+        incomplete_lines_missing_chars
+    ))
     autocomplete_scores.sort()
     median_autocomplete_score = autocomplete_scores[len(autocomplete_scores) // 2]
 

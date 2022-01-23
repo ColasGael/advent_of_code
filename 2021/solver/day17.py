@@ -2,7 +2,7 @@ def main(input_lines):
     target_area = parse_target_area(input_lines)
 
     max_initial_y_speed = find_max_y_speed(target_area)
-    part1_answer = max_initial_y_speed * (max_initial_y_speed + 1) / 2
+    part1_answer = int(max_initial_y_speed * (max_initial_y_speed + 1) / 2)
     part2_answer = len(find_all_valid_initial_speeds(target_area))
 
     return part1_answer, part2_answer
