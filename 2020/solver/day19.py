@@ -33,12 +33,12 @@ def parse_input(input_lines):
     messages = []
     is_done_rules = False
     for input_line in input_lines:
-        if input_line == '\n':
+        if len(input_line) == 0:
             is_done_rules = True
         if not is_done_rules:
             parse_rule(input_line, rules)
         else:
-            messages.append(input_line.strip())
+            messages.append(input_line)
     rules = [rules[rule_id] for rule_id in range(len(rules))]
     return rules, messages
 

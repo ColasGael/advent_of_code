@@ -25,7 +25,7 @@ def parse_input(input_lines):
     for input_line in input_lines:
         ingredients_raw, allergens_raw = input_line.split('contains')
         ingredients = ingredients_raw[:-2].split(' ')
-        allergens = allergens_raw[1:-2].split(', ')
+        allergens = allergens_raw[1:-1].split(', ')
         foods.append((ingredients, allergens))
     return foods
 

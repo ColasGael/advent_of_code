@@ -30,13 +30,13 @@ def parse_input(input_lines, pixel_0, pixel_1):
     tiles = {}
     tile_raw = []
     for input_line in input_lines:
-        if input_line == '\n':
+        if len(input_line) == 0:
             tiles[tile_id] = parse_tile(tile_raw, pixel_0, pixel_1)
             tile_raw = []
         elif 'Tile' in input_line:
             tile_id = int(re.search("\d+", input_line).group())
         else:
-            tile_raw.append(input_line.strip())
+            tile_raw.append(input_line)
     tiles[tile_id] = parse_tile(tile_raw, pixel_0, pixel_1)
     return tiles
 

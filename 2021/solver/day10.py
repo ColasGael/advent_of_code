@@ -18,7 +18,7 @@ def check_chunks(input_lines):
         is_corrupted_line = False
         open_chunks = []
 
-        for c in input_line.strip():
+        for c in input_line:
             if c in char_pairs.keys():
                 open_chunks.append(c)
             elif c in char_pairs.values():

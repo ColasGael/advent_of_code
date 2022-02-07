@@ -34,7 +34,7 @@ def parse_input(input_lines):
 
     is_done_rules, is_done_my_ticket = False, False
     for input_line in input_lines:
-        if (input_line == "\n") or ('ticket' in input_line):
+        if (len(input_line) == 0) or ('ticket' in input_line):
             is_done_rules = True
             continue
 

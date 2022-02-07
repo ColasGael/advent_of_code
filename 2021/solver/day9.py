@@ -5,7 +5,7 @@ def main(input_lines):
 
 
 def parse_heightmap(input_lines):
-    heightmap = [[int(c) for c in input_line.strip()] for input_line in input_lines]
+    heightmap = [[int(c) for c in input_line] for input_line in input_lines]
     return heightmap
 
 

@@ -1,11 +1,10 @@
 def main(input_lines):
     group_answers = [[]]
-    for line in input_lines:
-        line = line.strip()
-        if not line:
+    for input_line in input_lines:
+        if len(input_line) == 0:
             group_answers.append([])
         else:
-            group_answers[-1].append(line)
+            group_answers[-1].append(input_line)
 
     n_anyone_yes_answers = 0
     n_everyone_yes_answers = 0

@@ -15,7 +15,7 @@ SOLVING_MODULE = "{year}.solver.day{day}"
 
 def load_input(input_path):
     with open(input_path, 'r') as input_file:
-        input_lines = input_file.readlines()
+        input_lines = input_file.read().splitlines()
     return input_lines
 
 
@@ -32,8 +32,8 @@ def load_solution(solution_path):
     part1_solution, part2_solution = None, None
     if os.path.isfile(solution_path):
         with open(solution_path, 'r') as input_file:
-            input_lines = input_file.readlines()
-        part1_solution, part2_solution = input_lines[0].strip(), input_lines[1].strip()
+            input_lines = input_file.read().splitlines()
+        part1_solution, part2_solution = input_lines[0], input_lines[1]
     return part1_solution, part2_solution
 
 

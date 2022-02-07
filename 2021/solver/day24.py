@@ -224,7 +224,7 @@ def is_valid_model_num(program_lines, model_num):
     }
     input_idx = 0
     for program_line in program_lines:
-        instructions = program_line.strip().split(" ")
+        instructions = program_line.split(" ")
         operation = instructions[0]
         variable_name = instructions[1]
         if operation == "inp":

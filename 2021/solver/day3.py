@@ -1,5 +1,5 @@
 def main(input_lines):
-    diagnostic_report = [[int(bit) for bit in diagnostic_line.strip()] for diagnostic_line in input_lines]
+    diagnostic_report = [[int(bit) for bit in diagnostic_line] for diagnostic_line in input_lines]
 
     gamma_rate, epsilon_rate = analyze_power_consumption(diagnostic_report)
     power_consumption = gamma_rate * epsilon_rate

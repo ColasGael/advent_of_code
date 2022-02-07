@@ -8,7 +8,7 @@ def main(input_lines):
 
 
 def parse_map(input_lines):
-    map = [list(input_line.strip()) for input_line in input_lines]
+    map = [list(input_line) for input_line in input_lines]
     return map
 
 

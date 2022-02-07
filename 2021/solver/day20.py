@@ -8,9 +8,9 @@ def main(input_lines, light_char="#"):
 
 
 def parse_im(input_lines, light_char):
-    im_enhance_alg = [int(c == light_char) for c in input_lines[0].strip()]
+    im_enhance_alg = [int(c == light_char) for c in input_lines[0]]
     input_im = [
-        [int(c == light_char) for c in input_line.strip()]
+        [int(c == light_char) for c in input_line]
         for input_line in input_lines[2:]
     ]
     return im_enhance_alg, input_im

@@ -10,7 +10,7 @@ def main(input_lines):
 
 def parse_map(input_lines):
     risk_levels = [
-        [int(risk_level) for risk_level in row.strip()]
+        [int(risk_level) for risk_level in row]
         for row in input_lines
     ]
     return risk_levels

@@ -19,7 +19,7 @@ def parse_input(input_lines, active_char, inactive_char):
     initial_state = []
     for input_line in input_lines:
         initial_state_row = []
-        for char in input_line.strip():
+        for char in input_line:
             if char == active_char:
                 initial_state_row.append(True)
             elif char == inactive_char:

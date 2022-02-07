@@ -2,8 +2,8 @@ import re
 
 
 def main(input_lines):
-    part1_answer = sum([compute(input_line.strip(), part1_compute_wo_parenthesis) for input_line in input_lines])
-    part2_answer = sum([compute(input_line.strip(), part2_compute_wo_parenthesis) for input_line in input_lines])
+    part1_answer = sum([compute(input_line, part1_compute_wo_parenthesis) for input_line in input_lines])
+    part2_answer = sum([compute(input_line, part2_compute_wo_parenthesis) for input_line in input_lines])
 
     return part1_answer, part2_answer
 

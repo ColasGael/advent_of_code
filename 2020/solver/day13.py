@@ -1,6 +1,6 @@
 def main(input_lines, unavailable_char='x'):
     start_ts = int(input_lines[0])
-    available_buses = [(i, int(bus_id)) for i, bus_id in enumerate(input_lines[1].strip().split(',')) if (bus_id != unavailable_char)]
+    available_buses = [(i, int(bus_id)) for i, bus_id in enumerate(input_lines[1].split(',')) if (bus_id != unavailable_char)]
 
     earliest_bus_id = min(available_buses, key=lambda bus: get_next_bus_departure_ts(start_ts, bus[1]))[1]
     wait_time = get_next_bus_departure_ts(start_ts, earliest_bus_id) - start_ts

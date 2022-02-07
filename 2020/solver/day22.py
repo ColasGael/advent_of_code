@@ -19,7 +19,7 @@ def parse_input(input_lines, n_players=2):
     current_player_no = None
     player_decks = [[] for i in range(n_players)]
     for input_line in input_lines:
-        if not input_line.strip():
+        if len(input_line) == 0:
             continue
         m = PLAYER_PATTERN.match(input_line)
         if m:

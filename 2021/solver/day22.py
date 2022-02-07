@@ -18,7 +18,7 @@ def main(input_lines, init_side=50):
 def parse_reboot_steps(input_lines):
     reboot_steps = []
     for input_line in input_lines:
-        action, ranges_str = input_line.strip().split(" ")
+        action, ranges_str = input_line.split(" ")
         cuboid = []
         for cuboid_range in ranges_str.split(","):
             start_idx, end_idx = cuboid_range[2:].split("..")

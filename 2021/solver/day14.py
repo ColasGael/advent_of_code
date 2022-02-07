@@ -8,7 +8,7 @@ def main(input_lines):
 
 
 def parse_polymer_manual(input_lines):
-    polymer_template = [c for c in input_lines[0].strip()]
+    polymer_template = [c for c in input_lines[0]]
     boundary_els = (polymer_template[0], polymer_template[-1])
 
     polymer_pair_counts = {}
@@ -22,7 +22,7 @@ def parse_polymer_manual(input_lines):
 
     insertion_rules = {}
     for input_line in input_lines[2:]:
-        input_els, output_el = input_line.strip().split(" -> ")
+        input_els, output_el = input_line.split(" -> ")
         start_el, end_el = input_els
         insertion_rules[(start_el, end_el)] = output_el
 

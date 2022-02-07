@@ -12,7 +12,7 @@ def main(input_lines):
 
 def parse_start_positions(input_lines):
     start_positions = [
-        int(input_line.strip().split(" ")[-1])
+        int(input_line.split(" ")[-1])
         for input_line in input_lines
     ]
     return start_positions
@@ -33,7 +33,7 @@ def play_deterministic(start_positions, win_score=1000, num_dice_roll_per_turn=3
 
             scores[player_idx] += positions[player_idx]
             if scores[player_idx] >= win_score:
-                break        
+                break
 
     return scores, num_dice_roll
 
@@ -64,8 +64,8 @@ def play_quantic(player1_start_position, player2_start_position, win_score=21):
                     continue
 
                 open_games.append((
-                    player2_total_count, 
-                    player1_new_position, player2_new_position, 
+                    player2_total_count,
+                    player1_new_position, player2_new_position,
                     player1_new_score, player2_new_score
                 ))
 

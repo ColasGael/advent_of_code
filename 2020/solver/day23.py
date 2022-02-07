@@ -10,7 +10,7 @@ def main(input_lines, part1_n_games=100, part2_n_games=10000000, part2_n_cups=10
 
 
 def parse_input(input_lines):
-    cups = [int(char) for char in input_lines[0].strip()]
+    cups = [int(char) for char in input_lines[0]]
     return cups
 
 

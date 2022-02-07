@@ -10,7 +10,7 @@ def main(input_lines):
 def parse_edges(input_lines):
     edges = {}
     for input_line in input_lines:
-        node_1, node_2 = input_line.strip().split("-")
+        node_1, node_2 = input_line.split("-")
         for node in (node_1, node_2):
             if node not in edges:
                 edges[node] = []

@@ -8,7 +8,7 @@ def parse_grid(input_lines):
     grid = []
     for input_line in input_lines:
         grid.append([])
-        for c in input_line.strip():
+        for c in input_line:
             grid[-1].append(int(c))
     return grid
 

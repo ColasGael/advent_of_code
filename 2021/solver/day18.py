@@ -1,5 +1,5 @@
 def main(input_lines):
-    snailfish_nums = [parse_snailfish_num(input_line.strip()) for input_line in input_lines]
+    snailfish_nums = [parse_snailfish_num(input_line) for input_line in input_lines]
     part1_answer = compute_magnitude(sum(snailfish_nums))
 
     all_two_number_sums = [

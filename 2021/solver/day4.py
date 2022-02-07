@@ -22,7 +22,7 @@ def parse_bingo(input_lines):
 
     boards = [[]]
     for input_line in input_lines[2:]:
-        if len(input_line.strip()) == 0:
+        if len(input_line) == 0:
             boards.append([])
             continue
         board_row = [int(number) for number in input_line.split() if len(number) > 0]

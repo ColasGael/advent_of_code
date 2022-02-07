@@ -17,7 +17,6 @@ def main(input_lines, min_num_matching_beacons=12):
 def parse_beacons(input_lines):
     sensors = []
     for input_line in input_lines:
-        input_line = input_line.strip()
         if len(input_line) == 0:
             continue
         elif "scanner" in input_line:

@@ -6,7 +6,7 @@ def main(input_lines):
 def parse_message(input_lines):
     # 1. Convert from hexadecimal to binary
     bin_message = []
-    for hex_char in input_lines[0].strip():
+    for hex_char in input_lines[0]:
         bin_message.extend(hexadecimal_to_binary(hex_char))
 
     # 2. Parse the hierarchy of the packets

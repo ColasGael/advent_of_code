@@ -8,8 +8,8 @@ def parse_entries(input_lines):
     entries = []
     for input_line in input_lines:
         inputs, outputs = input_line.split("|")
-        signal_patterns = [set(pattern) for pattern in inputs.strip().split(" ")]
-        output_digits = [set(pattern) for pattern in outputs.strip().split(" ")]
+        signal_patterns = [set(pattern) for pattern in inputs.split(" ")]
+        output_digits = [set(pattern) for pattern in outputs.split(" ")]
         entries.append((signal_patterns, output_digits))
     return entries
 

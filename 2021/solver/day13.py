@@ -16,7 +16,7 @@ def parse_page(input_lines):
         if input_line.startswith("fold along"):
             fold_axis, line_num = input_line.split(" ")[-1].split("=")
             instructions.append((int(fold_axis == "y"), int(line_num)))
-        elif len(input_line.strip()) == 0:
+        elif len(input_line) == 0:
             continue
         else:
             x, y = input_line.split(",")

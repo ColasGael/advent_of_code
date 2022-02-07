@@ -1,5 +1,5 @@
 def main(input_lines, tree_char='#'):
-    tree_map = [[(char == tree_char) for char in line.rstrip()] for line in input_lines]
+    tree_map = [[(char == tree_char) for char in line] for line in input_lines]
 
     SLOPE = (3, 1)
     part1_answer = find_trees_on_slope(tree_map, *SLOPE)
