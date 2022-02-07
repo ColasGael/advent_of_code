@@ -39,7 +39,7 @@ def find_synchronized_departure_ts_fast(available_buses):
     for position, bus_id in available_buses[1:]:
         pgcd, x, y = solve_equation_diophantienne(q, bus_id)
         offset = - (r + position)
-        x, y = x * offset / pgcd, y * offset / pgcd
+        x, y = x * offset // pgcd, y * offset // pgcd
         q, r = bus_id * q, x * q + r
         q, r = abs(q), r % abs(q)
     return r

@@ -3,7 +3,7 @@ import re
 
 import numpy as np
 
-from day5 import bit_to_int
+from .day5 import bit_to_int
 
 
 def main(input_lines, unchanged_char='X', unchanged_int=-1):

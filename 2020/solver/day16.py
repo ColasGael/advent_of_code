@@ -64,7 +64,7 @@ def is_valid_value(value, rules):
 
 
 def find_fields_position(rules, tickets):
-    fields = rules.keys()
+    fields = list(rules.keys())
     position_to_field_hypothesis = np.full((len(tickets[0]), len(fields)), True)
     position_to_field_confirmed = {}
 

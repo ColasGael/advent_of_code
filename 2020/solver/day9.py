@@ -1,6 +1,6 @@
 import re
 
-from day1 import is_sum_of_2
+from .day1 import is_sum_of_2
 
 
 def main(input_lines, preamble_len=25):

@@ -3,7 +3,7 @@ from collections import deque
 
 import numpy as np
 
-from day11 import convolution2D
+from .day11 import convolution2D
 
 
 MONSTER_PATTERN = [
@@ -103,7 +103,7 @@ def find_connections(tiles):
     connections = {tile_id: {} for tile_id in tiles.keys()}
 
     todo_tiles = deque()
-    first_tile_id = tiles.keys()[0]
+    first_tile_id = list(tiles.keys())[0]
     todo_tiles.append(first_tile_id)
     is_done_tile = {tile_id: False for tile_id in tiles.keys()}
     while todo_tiles:

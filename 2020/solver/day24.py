@@ -2,7 +2,7 @@ import re
 
 import numpy as np
 
-from day11 import convolution2D
+from .day11 import convolution2D
 
 
 def main(input_lines, n_days=100):
