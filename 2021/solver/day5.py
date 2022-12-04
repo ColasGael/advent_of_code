@@ -28,9 +28,10 @@ def parse_vent_lines(input_lines):
 
 
 def count_intersections(vent_lines, max_x, max_y, ignore_diagonal=False):
-    n_intersections, n_diagonal_intersections = 0, 0
+    n_intersections = 0
     # Build the map of the sea floor
     intersections_map = [[0] * (max_x + 1) for i in range(max_y + 1)]
+    # pylint: disable=invalid-name
     for vent_line in vent_lines:
         # vertical line: constant x
         if vent_line[0][0] == vent_line[1][0]:
@@ -57,7 +58,9 @@ def count_intersections(vent_lines, max_x, max_y, ignore_diagonal=False):
         # diagonal line: slope +/- 1
         elif not ignore_diagonal:
             slope = 1
-            if (vent_line[0][1] - vent_line[1][1]) * (vent_line[0][0] - vent_line[1][0]) < 0:
+            if (vent_line[0][1] - vent_line[1][1]) * (
+                vent_line[0][0] - vent_line[1][0]
+            ) < 0:
                 slope = -1
             start_x = min(vent_line[0][0], vent_line[1][0])
             end_x = max(vent_line[0][0], vent_line[1][0])
@@ -69,4 +72,5 @@ def count_intersections(vent_lines, max_x, max_y, ignore_diagonal=False):
                 # Add the current vent line
                 intersections_map[y][x] += 1
                 y += slope
+    # pylint: enable=invalid-name
     return n_intersections

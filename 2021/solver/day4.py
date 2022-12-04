@@ -5,13 +5,15 @@ def main(input_lines):
         first_winning_board_last_number,
         first_winning_board_idx,
         last_winning_board_last_number,
-        last_winning_board_idx
+        last_winning_board_idx,
     ) = play_bingo(drawn_numbers, boards, board_numbers, visited_boards)
 
     part1_answer = compute_score(
-        first_winning_board_last_number, first_winning_board_idx, boards, visited_boards)
+        first_winning_board_last_number, first_winning_board_idx, boards, visited_boards
+    )
     part2_answer = compute_score(
-        last_winning_board_last_number, last_winning_board_idx, boards, visited_boards)
+        last_winning_board_last_number, last_winning_board_idx, boards, visited_boards
+    )
 
     return part1_answer, part2_answer
 
@@ -41,23 +43,25 @@ def parse_bingo(input_lines):
     # key: board index
     # value: (count of marked numbers for each row, for each column, total sum of marked numbers)
     visited_boards = {
-        board_idx: [[0] * line_length, [0] * line_length, 0] for board_idx in range(len(boards))
+        board_idx: [[0] * line_length, [0] * line_length, 0]
+        for board_idx in range(len(boards))
     }
 
     return drawn_numbers, boards, board_numbers, visited_boards
 
 
 def play_bingo(drawn_numbers, boards, board_numbers, visited_boards):
-    '''
+    """
     Assumptions:
       - The boards are square: same number of rows and columns
       - The drawn numbers are all different.
       - The numbers on a given board are all different.
       - All the boards are winning when all the numbers have been drawn.
-    '''
+    """
     first_winning_board_last_number = None
     winning_boards = []
     line_length = len(boards[0][0])
+    number = None
     for number in drawn_numbers:
         check_number(line_length, number, board_numbers, visited_boards, winning_boards)
         if (first_winning_board_last_number is None) and (len(winning_boards) > 0):
@@ -72,7 +76,7 @@ def play_bingo(drawn_numbers, boards, board_numbers, visited_boards):
         first_winning_board_last_number,
         first_winning_board_idx,
         last_winning_board_last_number,
-        last_winning_board_idx
+        last_winning_board_idx,
     )
 
 
@@ -84,8 +88,10 @@ def check_number(line_length, number, board_numbers, visited_boards, winning_boa
         visited_boards[board_idx][0][row_idx] += 1
         visited_boards[board_idx][1][column_idx] += 1
         visited_boards[board_idx][2] += number
-        for marked_numbers_count in (visited_boards[board_idx][0][row_idx],
-                                     visited_boards[board_idx][1][column_idx]):
+        for marked_numbers_count in (
+            visited_boards[board_idx][0][row_idx],
+            visited_boards[board_idx][1][column_idx],
+        ):
             if marked_numbers_count == line_length:
                 winning_boards.append(board_idx)
                 break
@@ -93,7 +99,7 @@ def check_number(line_length, number, board_numbers, visited_boards, winning_boa
 
 def compute_score(last_number, winning_board_idx, boards, visited_boards):
     winning_board = boards[winning_board_idx]
-    board_sum = sum([sum(board_row) for board_row in winning_board])
+    board_sum = sum(sum(board_row) for board_row in winning_board)
     non_marked_numbers_sum = board_sum - visited_boards[winning_board_idx][2]
     score = last_number * non_marked_numbers_sum
     return score

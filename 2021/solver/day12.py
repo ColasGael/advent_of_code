@@ -19,9 +19,13 @@ def parse_edges(input_lines):
     return edges
 
 
-def find_paths(edges,
-               current_path=None, visited_one_small_cave_twice=False,
-               start_node="start", end_node="end"):
+def find_paths(
+    edges,
+    current_path=None,
+    visited_one_small_cave_twice=False,
+    start_node="start",
+    end_node="end",
+):
     def is_small_cave(node):
         return node == node.lower()
 
@@ -41,11 +45,13 @@ def find_paths(edges,
         if is_small_cave(next_node) and (next_node in current_path):
             if visited_one_small_cave_twice:
                 continue
-            else:
-                next_visited_one_small_cave_twice = True
-        next_paths.extend(find_paths(
-            edges,
-            current_path=current_path + [next_node],
-            visited_one_small_cave_twice=next_visited_one_small_cave_twice))
+            next_visited_one_small_cave_twice = True
+        next_paths.extend(
+            find_paths(
+                edges,
+                current_path=current_path + [next_node],
+                visited_one_small_cave_twice=next_visited_one_small_cave_twice,
+            )
+        )
 
     return next_paths

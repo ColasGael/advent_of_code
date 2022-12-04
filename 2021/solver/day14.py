@@ -1,5 +1,7 @@
 def main(input_lines):
-    boundary_els, polymer_pair_counts, insertion_rules = parse_polymer_manual(input_lines)
+    boundary_els, polymer_pair_counts, insertion_rules = parse_polymer_manual(
+        input_lines
+    )
 
     part1_answer = solve(boundary_els, polymer_pair_counts, insertion_rules, n_steps=10)
     part2_answer = solve(boundary_els, polymer_pair_counts, insertion_rules, n_steps=40)
@@ -8,7 +10,7 @@ def main(input_lines):
 
 
 def parse_polymer_manual(input_lines):
-    polymer_template = [c for c in input_lines[0]]
+    polymer_template = list(input_lines[0])
     boundary_els = (polymer_template[0], polymer_template[-1])
 
     polymer_pair_counts = {}
@@ -42,16 +44,16 @@ def step(prev_polymer_pair_counts, insertion_rules):
 
 
 def solve(boundary_els, polymer_pair_counts, insertion_rules, n_steps=1):
-    for i in range(n_steps):
+    for _i in range(n_steps):
         polymer_pair_counts = step(polymer_pair_counts, insertion_rules)
 
     el_counts = {el: 0.5 for el in boundary_els}
     for polymer_pair, count in polymer_pair_counts.items():
-        for el in polymer_pair:
-            if el not in el_counts:
-                el_counts[el] = 0
+        for element in polymer_pair:
+            if element not in el_counts:
+                el_counts[element] = 0
             # Except for the start and end elements, all elements are counted 2 times
-            el_counts[el] += 0.5 * count
+            el_counts[element] += 0.5 * count
 
     max_el_count = max(el_counts.values())
     min_el_count = min(el_counts.values())

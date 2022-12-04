@@ -16,12 +16,11 @@ def parse_target_area(input_lines):
     return target_area
 
 
-def find_root(c):
-    x_root = 0.5 * (-1 + (1 - 4 * c) ** 0.5)
+def find_root(const):
+    x_root = 0.5 * (-1 + (1 - 4 * const) ** 0.5)
     if int(x_root) == x_root:
         return int(x_root)
-    else:
-        return int(x_root) + 1
+    return int(x_root) + 1
 
 
 def find_max_y_speed(target_area):
@@ -33,8 +32,9 @@ def find_max_y_speed(target_area):
     # And we need to reach the target area: tot_x_distance >= target_area_min_x
     # The solution is the first integer greater then the positive root of the following polynomial:
     # initial_x_speed ** 2 + initial_x_speed - 2 * target_area_min_x = 0
-    target_area_min_x = target_area[0][0]
-    min_initial_x_speed = find_root(- 2 * target_area_min_x)
+
+    # target_area_min_x = target_area[0][0]
+    # min_initial_x_speed = find_root(-2 * target_area_min_x)
 
     # 2. Find the highest initial y-velocity
     # The maximum initial y-velocity candidate is the velocity
@@ -52,7 +52,7 @@ def find_max_y_speed(target_area):
 
 def is_valid_y_speed(initial_y_speed, target_area):
     # 1. Find the timestamp where the highest y-position is reached
-    highest_y_t = initial_y_speed
+    # highest_y_t = initial_y_speed
     highest_y = initial_y_speed * (initial_y_speed + 1) / 2
     # 2. Compute the minimum time to reach the target area y-span
     # At the timestamp where we reached the highest point the y-velocity is: 0.
@@ -64,22 +64,22 @@ def is_valid_y_speed(initial_y_speed, target_area):
     # in_area_t ** 2 + in_area_t - 2 * (highest_y - target_area_max_y) = 0
     target_area_max_y = target_area[1][1]
     tot_y_distance = highest_y - target_area_max_y
-    in_area_t = find_root(- 2 * tot_y_distance)
+    in_area_t = find_root(-2 * tot_y_distance)
     # 3. Check that the target area was not overshooted
     y_coord = highest_y - in_area_t * (in_area_t + 1) / 2
     target_area_min_y = target_area[1][0]
 
-    return (y_coord >= target_area_min_y)
+    return y_coord >= target_area_min_y
 
 
 def find_all_valid_initial_speeds(target_area):
     all_valid_initial_speeds = []
 
     target_area_min_x, target_area_max_x = target_area[0]
-    min_initial_x_speed = find_root(- 2 * target_area_min_x)
+    min_initial_x_speed = find_root(-2 * target_area_min_x)
     max_initial_x_speed = target_area_max_x
     for initial_x_speed in range(min_initial_x_speed, max_initial_x_speed + 1):
-        target_area_min_y, target_area_max_y = target_area[1]
+        target_area_min_y, _target_area_max_y = target_area[1]
         for initial_y_speed in range(target_area_min_y, -target_area_min_y + 1):
             if are_valid_initial_speeds(initial_x_speed, initial_y_speed, target_area):
                 all_valid_initial_speeds.append((initial_x_speed, initial_y_speed))
@@ -98,16 +98,18 @@ def are_valid_initial_speeds(initial_x_speed, initial_y_speed, target_area):
         highest_y = (-initial_y_speed - 1) * (-initial_y_speed - 1 + 1) / 2
 
     target_area_min_y, target_area_max_y = target_area[1]
-    in_area_y_min_t = find_root(- 2 * (highest_y - target_area_max_y))
-    in_area_y_max_t = find_root(- 2 * (highest_y - target_area_min_y))
+    in_area_y_min_t = find_root(-2 * (highest_y - target_area_max_y))
+    in_area_y_max_t = find_root(-2 * (highest_y - target_area_min_y))
 
     for in_area_t in range(in_area_y_min_t, in_area_y_max_t + 1):
         y_coord = highest_y - in_area_t * (in_area_t + 1) / 2
-        if not (target_area_min_y <= y_coord <= target_area_max_y):
+        if not target_area_min_y <= y_coord <= target_area_max_y:
             continue
-        t = min(highest_y_t + 1 + in_area_t, initial_x_speed)
+        t = min(  # pylint: disable=invalid-name
+            highest_y_t + 1 + in_area_t, initial_x_speed
+        )
         x_coord = t * (initial_x_speed + (initial_x_speed - t + 1)) / 2
-        if not (target_area_min_x <= x_coord <= target_area_max_x):
+        if not target_area_min_x <= x_coord <= target_area_max_x:
             continue
         return True
     return False

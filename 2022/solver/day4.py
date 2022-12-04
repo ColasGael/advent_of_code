@@ -16,13 +16,13 @@ def main(input_lines):
 def fully_contains(range_1, range_2):
     if range_2[0] < range_1[0] or range_2[1] > range_1[1]:
         range_1, range_2 = range_2, range_1
-    return  range_1[0] <= range_2[0] and range_2[1] <= range_1[1]
+    return range_1[0] <= range_2[0] and range_2[1] <= range_1[1]
 
 
 def overlaps(range_1, range_2):
-    if range_2[0] < range_1[0] :
+    if range_2[0] < range_1[0]:
         range_1, range_2 = range_2, range_1
-    return  range_2[0] <= range_1[1]
+    return range_2[0] <= range_1[1]
 
 
 def solve(cleaning_range_pairs, func):

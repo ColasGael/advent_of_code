@@ -10,7 +10,7 @@ def parse_message(input_lines):
         bin_message.extend(hexadecimal_to_binary(hex_char))
 
     # 2. Parse the hierarchy of the packets
-    packet_len, packet_version_sum, output_value = parse_packet(bin_message, 0)
+    _packet_len, packet_version_sum, output_value = parse_packet(bin_message, 0)
     return packet_version_sum, output_value
 
 
@@ -47,11 +47,14 @@ def get_operator(packet_type_id):
     packet_type_id_to_operator = {
         0: lambda prev_output_value, output_value: prev_output_value + output_value,
         1: lambda prev_output_value, output_value: prev_output_value * output_value,
-        2: lambda prev_output_value, output_value: min(prev_output_value, output_value),
-        3: lambda prev_output_value, output_value: max(prev_output_value, output_value),
-        5: lambda prev_output_value, output_value: 1 * (prev_output_value > output_value),
-        6: lambda prev_output_value, output_value: 1 * (prev_output_value < output_value),
-        7: lambda prev_output_value, output_value: 1 * (prev_output_value == output_value),
+        2: min,
+        3: max,
+        5: lambda prev_output_value, output_value: 1
+        * (prev_output_value > output_value),
+        6: lambda prev_output_value, output_value: 1
+        * (prev_output_value < output_value),
+        7: lambda prev_output_value, output_value: 1
+        * (prev_output_value == output_value),
     }
     return packet_type_id_to_operator[packet_type_id]
 
@@ -64,14 +67,17 @@ def parse_packet(message, start_index):
     packet_len += 3
 
     packet_type_id = binary2decimal(
-        message[start_index + packet_len : start_index + packet_len + 3])
+        message[start_index + packet_len : start_index + packet_len + 3]
+    )
     packet_len += 3
 
     if packet_type_id == 4:
         subpacket_len, output_value = parse_literal(message, start_index + packet_len)
     else:
         operator_func = get_operator(packet_type_id)
-        subpacket_len, subpacket_version_sum, output_value = parse_operator(message, start_index + packet_len, operator_func)
+        subpacket_len, subpacket_version_sum, output_value = parse_operator(
+            message, start_index + packet_len, operator_func
+        )
         packet_version_sum += subpacket_version_sum
 
     packet_len += subpacket_len
@@ -84,9 +90,13 @@ def parse_literal(message, start_index):
     literal_bin_num = []
 
     while message[start_index + packet_len] != 0:
-        literal_bin_num.extend(message[start_index + packet_len + 1 : start_index + packet_len + 5])
+        literal_bin_num.extend(
+            message[start_index + packet_len + 1 : start_index + packet_len + 5]
+        )
         packet_len += 5
-    literal_bin_num.extend(message[start_index + packet_len + 1 : start_index + packet_len + 5])
+    literal_bin_num.extend(
+        message[start_index + packet_len + 1 : start_index + packet_len + 5]
+    )
     packet_len += 5
 
     return packet_len, binary2decimal(literal_bin_num)
@@ -100,19 +110,24 @@ def parse_operator(message, start_index, operator_func):
     packet_len += 1
     if length_id_type == 0:
         total_subpackets_len = binary2decimal(
-            message[start_index + packet_len : start_index + packet_len + 15])
+            message[start_index + packet_len : start_index + packet_len + 15]
+        )
         packet_len += 15
     else:
         total_subpackets_count = binary2decimal(
-            message[start_index + packet_len : start_index + packet_len + 11])
+            message[start_index + packet_len : start_index + packet_len + 11]
+        )
         packet_len += 11
 
     prev_output_value = None
     packet_version_sum = 0
     subpackets_len = subpackets_count = 0
-    while ((subpackets_len < total_subpackets_len) or (subpackets_count < total_subpackets_count)):
+    while (subpackets_len < total_subpackets_len) or (
+        subpackets_count < total_subpackets_count
+    ):
         subpacket_len, subpacket_version_sum, output_value = parse_packet(
-            message, start_index + packet_len + subpackets_len)
+            message, start_index + packet_len + subpackets_len
+        )
         subpackets_len += subpacket_len
         subpackets_count += 1
         packet_version_sum += subpacket_version_sum

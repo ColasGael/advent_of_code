@@ -15,7 +15,7 @@ def main(input_lines):
     sorted_allergen_ingredients = []
     for allergen in sorted(allergen_to_ingredient.keys()):
         sorted_allergen_ingredients.append(allergen_to_ingredient[allergen])
-    part2_answer = ','.join(sorted_allergen_ingredients)
+    part2_answer = ",".join(sorted_allergen_ingredients)
 
     return part1_answer, part2_answer
 
@@ -23,9 +23,9 @@ def main(input_lines):
 def parse_input(input_lines):
     foods = []
     for input_line in input_lines:
-        ingredients_raw, allergens_raw = input_line.split('contains')
-        ingredients = ingredients_raw[:-2].split(' ')
-        allergens = allergens_raw[1:-1].split(', ')
+        ingredients_raw, allergens_raw = input_line.split("contains")
+        ingredients = ingredients_raw[:-2].split(" ")
+        allergens = allergens_raw[1:-1].split(", ")
         foods.append((ingredients, allergens))
     return foods
 
@@ -38,7 +38,11 @@ def match_allergen_to_ingredient(foods):
             if allergen not in allergen_to_ingredient_hypothesis:
                 allergen_to_ingredient_hypothesis[allergen] = set(ingredients)
             else:
-                allergen_to_ingredient_hypothesis[allergen] = allergen_to_ingredient_hypothesis[allergen].intersection(ingredients)
+                allergen_to_ingredient_hypothesis[
+                    allergen
+                ] = allergen_to_ingredient_hypothesis[allergen].intersection(
+                    ingredients
+                )
         all_ingredients = all_ingredients.union(ingredients)
 
     all_allergens = list(allergen_to_ingredient_hypothesis.keys())
@@ -55,7 +59,9 @@ def match_allergen_to_ingredient(foods):
                 for j, other_allergen in enumerate(all_allergens):
                     if confirmed_allergens[j]:
                         continue
-                    allergen_to_ingredient_hypothesis[other_allergen].discard(ingredient)
+                    allergen_to_ingredient_hypothesis[other_allergen].discard(
+                        ingredient
+                    )
 
     return allergen_to_ingredient_hypothesis, all_ingredients
 

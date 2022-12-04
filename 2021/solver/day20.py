@@ -10,8 +10,7 @@ def main(input_lines, light_char="#"):
 def parse_im(input_lines, light_char):
     im_enhance_alg = [int(c == light_char) for c in input_lines[0]]
     input_im = [
-        [int(c == light_char) for c in input_line]
-        for input_line in input_lines[2:]
+        [int(c == light_char) for c in input_line] for input_line in input_lines[2:]
     ]
     return im_enhance_alg, input_im
 
@@ -60,11 +59,11 @@ def enhance(im_enhance_alg, input_im, background_value):
     return output_im
 
 
-def solve(im_enhance_alg, im, n_steps=0):
+def solve(im_enhance_alg, image, n_steps=0):
     background_value = 0
-    for k in range(n_steps):
-        im = enhance(im_enhance_alg, im, background_value)
+    for _k in range(n_steps):
+        image = enhance(im_enhance_alg, image, background_value)
         background_enhance_key = [background_value] * 9
         background_value = im_enhance_alg[binary_to_int(background_enhance_key)]
-    num_lit_pixels = sum(map(sum, im))
+    num_lit_pixels = sum(map(sum, image))
     return num_lit_pixels

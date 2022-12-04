@@ -4,9 +4,9 @@ import numpy as np
 def main(input_lines, max_column=8):
     seat_ids = []
     for line in input_lines:
-        binary_space_partition_row = np.array([char == 'B' for char in line[0:7]])
+        binary_space_partition_row = np.array([char == "B" for char in line[0:7]])
         row = bit_to_int(binary_space_partition_row)
-        binary_space_partition_column = np.array([char == 'R' for char in line[7:10]])
+        binary_space_partition_column = np.array([char == "R" for char in line[7:10]])
         column = bit_to_int(binary_space_partition_column)
         seat_id = row * max_column + column
         seat_ids.append(seat_id)
@@ -15,7 +15,7 @@ def main(input_lines, max_column=8):
 
 
 def bit_to_int(bit, base=2):
-    powers = np.array([base**i for i in range(bit.size-1, -1, -1)])
+    powers = np.array([base**i for i in range(bit.size - 1, -1, -1)])
     number = np.sum(powers * bit)
     return number
 
@@ -51,5 +51,10 @@ def find_missing_number(numbers):
     for number_i, is_found_number in enumerate(is_found_numbers):
         if not is_found_number:
             min_number_i = min_number % tot_numbers
-            number = min_number + (number_i - min_number_i) + tot_numbers * (number_i < min_number_i)
+            number = (
+                min_number
+                + (number_i - min_number_i)
+                + tot_numbers * (number_i < min_number_i)
+            )
             return number
+    raise RuntimeError("Could not find missing number")

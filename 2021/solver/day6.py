@@ -16,7 +16,7 @@ def parse_internal_timers(input_lines):
 
 
 def reproduce(internal_timer_counts, n_days):
-    for i in range(n_days):
+    for _i in range(n_days):
         internal_timer_counts = step(internal_timer_counts)
     n_lanterfishes = sum(internal_timer_counts)
     return n_lanterfishes

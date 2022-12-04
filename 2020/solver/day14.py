@@ -6,25 +6,33 @@ import numpy as np
 from .day5 import bit_to_int
 
 
-def main(input_lines, unchanged_char='X', unchanged_int=-1):
-    MASK_PATTERN = re.compile("mask = (?P<mask>[{}01]+)".format(unchanged_char))
-    INSTRUCTION_PATTERN = re.compile("mem\[(?P<memory_address>\d+)\] = (?P<value>\d+)")
+INSTRUCTION_PATTERN = re.compile(r"mem\[(?P<memory_address>\d+)\] = (?P<value>\d+)")
+
+
+def main(input_lines, unchanged_char="X", unchanged_int=-1):
+    mask_pattern = re.compile(r"mask = (?P<mask>[{}01]+)".format(unchanged_char))
 
     part1_memory = {}
     part2_memory = {}
     for input_line in input_lines:
-        m = MASK_PATTERN.match(input_line)
-        if m:
-            mask = load_mask(m.group('mask'), unchanged_char, unchanged_int)
+        match = mask_pattern.match(input_line)
+        if match:
+            mask = load_mask(match.group("mask"), unchanged_char, unchanged_int)
             continue
-        m = INSTRUCTION_PATTERN.match(input_line)
-        if m:
-            memory_address, value = int(m.group('memory_address')), int(m.group('value'))
-            part1_update_memory(part1_memory, memory_address, value, mask, unchanged_int)
-            part2_update_memory(part2_memory, memory_address, value, mask, unchanged_int)
+        match = INSTRUCTION_PATTERN.match(input_line)
+        if match:
+            memory_address, value = int(match.group("memory_address")), int(
+                match.group("value")
+            )
+            part1_update_memory(
+                part1_memory, memory_address, value, mask, unchanged_int
+            )
+            part2_update_memory(
+                part2_memory, memory_address, value, mask, unchanged_int
+            )
 
-    part1_answer = sum([value for value in part1_memory.values()])
-    part2_answer = sum([value for value in part2_memory.values()])
+    part1_answer = sum(part1_memory.values())
+    part2_answer = sum(part2_memory.values())
     return part1_answer, part2_answer
 
 
@@ -51,13 +59,15 @@ def load_mask(mask_raw, unchanged_char, unchanged_int):
 def part1_update_memory(memory, memory_address, value, mask, unchanged_int):
     n_bits = mask.size
     if value > 2**n_bits - 1:
-        raise RuntimeError("Integer value {} cannot be stored with {} bits!".format(value, n_bits))
+        raise RuntimeError(
+            "Integer value {} cannot be stored with {} bits!".format(value, n_bits)
+        )
     memory[memory_address] = part1_apply_mask(mask, value, unchanged_int)
 
 
 def part1_apply_mask(mask, value, unchanged_int):
     n_bits = mask.size
-    bit =  int_to_bit(value, n_bits)
+    bit = int_to_bit(value, n_bits)
     new_bit = np.where(mask != unchanged_int, mask, bit)
     new_value = bit_to_int(new_bit)
     return new_value
@@ -66,20 +76,25 @@ def part1_apply_mask(mask, value, unchanged_int):
 def part2_update_memory(memory, memory_address, value, mask, unchanged_int):
     n_bits = mask.size
     if value > 2**n_bits - 1:
-        raise RuntimeError("Integer value {} cannot be stored with {} bits!".format(value, n_bits))
+        raise RuntimeError(
+            "Integer value {} cannot be stored with {} bits!".format(value, n_bits)
+        )
 
-    memory_addresses = part2_apply_mask(mask, memory_address, unchanged_int)
-    for memory_address in memory_addresses:
-        memory[memory_address] = value
+    new_memory_addresses = part2_apply_mask(mask, memory_address, unchanged_int)
+    for new_memory_address in new_memory_addresses:
+        memory[new_memory_address] = value
 
 
 def part2_apply_mask(mask, value, unchanged_int):
     n_bits = mask.size
-    bit =  int_to_bit(value, n_bits)
+    bit = int_to_bit(value, n_bits)
     masked_bit = np.where(mask == 1, mask, bit)
 
     n_floating_bits = np.sum(mask == unchanged_int)
-    floating_combinations = [np.array(combination) for combination in product(range(2), repeat=n_floating_bits)]
+    floating_combinations = [
+        np.array(combination)
+        for combination in product(range(2), repeat=n_floating_bits)
+    ]
 
     new_values = []
     for floating_combination in floating_combinations:

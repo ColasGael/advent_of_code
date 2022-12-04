@@ -19,8 +19,8 @@ def parse_page(input_lines):
         elif len(input_line) == 0:
             continue
         else:
-            x, y = input_line.split(",")
-            dots.add((int(x), int(y)))
+            x_coord, y_coord = input_line.split(",")
+            dots.add((int(x_coord), int(y_coord)))
     return dots, instructions
 
 
@@ -43,8 +43,8 @@ def follow_instructions(dots, instructions):
 
 
 def display_code(dots):
-    max_x = max([dot[0] for dot in dots])
-    max_y = max([dot[1] for dot in dots])
+    max_x = max(dot[0] for dot in dots)
+    max_y = max(dot[1] for dot in dots)
 
     grid = [[False] * (max_x + 1) for i in range(max_y + 1)]
     for dot in dots:

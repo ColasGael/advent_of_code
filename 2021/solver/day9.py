@@ -30,7 +30,9 @@ def find_basins(heightmap, max_height=9):
             for neighbour in get_processed_neighbours(row_idx, col_idx):
                 neighbour_basin = basins_clusters[neighbour[0]][neighbour[1]]
                 if neighbour_basin != -1:
-                    associated_basins.append(basins_idx_remap.get(neighbour_basin, neighbour_basin))
+                    associated_basins.append(
+                        basins_idx_remap.get(neighbour_basin, neighbour_basin)
+                    )
 
             # Create a new basin
             if len(associated_basins) == 0:
@@ -41,9 +43,13 @@ def find_basins(heightmap, max_height=9):
                 basin_idx = associated_basins[0]
             # Merge the two existing basins now connecting through the current point
             else:  # len(associated_basins) == 2
-                if (associated_basins[0] != associated_basins[1]):
+                if associated_basins[0] != associated_basins[1]:
                     basin_idx = merge_basins(
-                        basins, associated_basins[0], associated_basins[1], basins_idx_remap)
+                        basins,
+                        associated_basins[0],
+                        associated_basins[1],
+                        basins_idx_remap,
+                    )
 
             # Update the associated basin
             update_basin(basins, basins_clusters, basin_idx, height)
@@ -51,7 +57,7 @@ def find_basins(heightmap, max_height=9):
     # Clean-up: filter merged basins ; sort the basins by increasing sizes
     basins = sorted([basin for basin in basins if basin is not None])
 
-    risk_levels_sum = sum([1 + basin[1] for basin in basins])
+    risk_levels_sum = sum(1 + basin[1] for basin in basins)
     three_largest_basins_sizes_prod = basins[-1][0] * basins[-2][0] * basins[-3][0]
 
     return risk_levels_sum, three_largest_basins_sizes_prod

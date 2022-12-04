@@ -2,7 +2,7 @@ def main(input_lines, part1_n_games=100, part2_n_games=10000000, part2_n_cups=10
     part1_cups = parse_input(input_lines)
     part1_answer = "".join([str(cup) for cup in play(part1_cups, part1_n_games)[1:]])
 
-    part2_cups = part1_cups + list(range(len(part1_cups)+1, part2_n_cups+1))
+    part2_cups = part1_cups + list(range(len(part1_cups) + 1, part2_n_cups + 1))
     part2_final_cup_order = play(part2_cups, part2_n_games)
     part2_answer = part2_final_cup_order[1] * part2_final_cup_order[2]
 
@@ -16,7 +16,7 @@ def parse_input(input_lines):
 
 def play(cups, n_games):
     current_cup, next_cups = start(cups)
-    for i in range(n_games):
+    for _i in range(n_games):
         current_cup, next_cups = move_cups(current_cup, next_cups)
     cups = find_final_cup_order(next_cups)
     return cups
@@ -34,7 +34,7 @@ def start(cups):
 def move_cups(current_cup, next_cups, n_cups_removed=3):
     removed_cups = []
     removed_cup = next_cups[current_cup]
-    for i in range(n_cups_removed):
+    for _i in range(n_cups_removed):
         removed_cups.append(removed_cup)
         removed_cup = next_cups[removed_cup]
     next_cups[current_cup] = removed_cup
@@ -58,28 +58,35 @@ def find_final_cup_order(next_cups):
 
 
 def play_naive(cups, n_games):
-    for i in range(n_games):
-        cups = move_cups(cups)
-    cups = find_final_cup_order(cups)
+    for _i in range(n_games):
+        cups = move_cups_naive(cups)
+    cups = find_final_cup_order_naive(cups)
     return cups
 
 
 def move_cups_naive(cups, n_cups_removed=3):
     current_cup = cups[0]
-    removed_cups = cups[1:1 + n_cups_removed]
-    remaining_cups = cups[1 + n_cups_removed:]
+    removed_cups = cups[1 : 1 + n_cups_removed]
+    remaining_cups = cups[1 + n_cups_removed :]
 
     destination_cup_idx, max_cup_idx = None, 0
     for idx, cup in enumerate(remaining_cups):
-        if (current_cup > cup):
-            if (destination_cup_idx is None) or (cup > remaining_cups[destination_cup_idx]):
+        if current_cup > cup:
+            if (destination_cup_idx is None) or (
+                cup > remaining_cups[destination_cup_idx]
+            ):
                 destination_cup_idx = idx
-        elif (cup > remaining_cups[max_cup_idx]):
+        elif cup > remaining_cups[max_cup_idx]:
             max_cup_idx = idx
     if destination_cup_idx is None:
         destination_cup_idx = max_cup_idx
 
-    new_cups = remaining_cups[:destination_cup_idx + 1] + removed_cups + remaining_cups[destination_cup_idx+1:] + [current_cup]
+    new_cups = (
+        remaining_cups[: destination_cup_idx + 1]
+        + removed_cups
+        + remaining_cups[destination_cup_idx + 1 :]
+        + [current_cup]
+    )
     return new_cups
 
 

@@ -16,7 +16,7 @@ def main(input_lines):
 
 
 def get_anyone_yes_answers(group_answer):
-    all_answers = ''.join(group_answer)
+    all_answers = "".join(group_answer)
     return set(all_answers)
 
 

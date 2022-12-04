@@ -1,4 +1,4 @@
-'''This problem is a bit different.
+"""This problem is a bit different.
 
 Instead of solving it:
 - algorithmically
@@ -201,9 +201,10 @@ To get the largest valid model number:
 
 Remark: You cand find below the function to apply any NOMAD program on a model number.
 This was used to check that the model numbers found above where valid.
-'''
+"""
 
-def main(input_lines):
+
+def main(_input_lines):
     part1_answer = 39494195799979
     part2_answer = 13161151139617
     return part1_answer, part2_answer
@@ -233,10 +234,9 @@ def is_valid_model_num(program_lines, model_num):
             continue
         variable_value = variables[variable_name]
         other_variable_name = instructions[2]
-        if other_variable_name in variables:
-            other_variable_value = variables[other_variable_name]
-        else:
-            other_variable_value = int(other_variable_name)
+        other_variable_value = variables.get(
+            other_variable_name, int(other_variable_name)
+        )
         if operation == "add":
             new_variable_value = variable_value + other_variable_value
         elif operation == "mul":

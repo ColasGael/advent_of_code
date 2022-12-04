@@ -36,6 +36,6 @@ def step(number, subject_number, base):
 
 def compute_encription_key(this_public_key, other_loop_size, base):
     encription_key = 1
-    for i in range(other_loop_size):
+    for _i in range(other_loop_size):
         encription_key = step(encription_key, this_public_key, base)
     return encription_key
