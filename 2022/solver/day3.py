@@ -8,7 +8,6 @@ def main(input_lines):
         assert n % 2 == 0
         rucksacks.append((list(line[:n//2]), list(line[n//2:])))
 
-
     part1_answer = solve_part_1(rucksacks)
     part2_answer = solve_part_2(rucksacks)
     return part1_answer, part2_answer
@@ -47,7 +46,7 @@ def solve_part_1(rucksacks):
 def find_badge(group_rucksacks):
     assert len(group_rucksacks) == 3
     # The badge is only item type carried in all three rucksacks from the group
-    badges = functools.reduce(set.intersection, map (lambda rucksack: set.union(set(rucksack[0]), set(rucksack[1])), group_rucksacks))
+    badges = functools.reduce(set.intersection, map(lambda rucksack: set.union(set(rucksack[0]), set(rucksack[1])), group_rucksacks))
     assert len(badges) == 1
     return badges.pop()
 
