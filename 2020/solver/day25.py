@@ -8,7 +8,7 @@ def main(input_lines, subject_number=7, base=20201227):
     assert card_encription_key == door_encription_key
     part1_answer = card_encription_key
 
-    part2_answer = None
+    part2_answer = "empty"
 
     return part1_answer, part2_answer
 

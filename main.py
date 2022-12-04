@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 from datetime import datetime
 import importlib
 import os
+import sys
 import time
 
 
@@ -18,14 +19,15 @@ def load_input(input_path):
     return input_lines
 
 
-def solve_puzzle(year, day_number, input_lines, *additional_args):
+def solve_puzzle(year, day_number, input_lines, *additional_args, always_print=False):
     solving_module = importlib.import_module(
         SOLVING_MODULE.format(year=year, day=day_number)
     )
     tic = time.time()
     part1_answer, part2_answer = solving_module.main(input_lines, *additional_args)
     toc = time.time()
-    print("Day {} was solved in {:.1f} ms !".format(day_number, (toc - tic) * 1000))
+    if always_print:
+        print("Day {} was solved in {:.1f} ms !".format(day_number, (toc - tic) * 1000))
     return part1_answer, part2_answer
 
 
@@ -40,19 +42,23 @@ def load_solution(solution_path):
     return part1_solution, part2_solution
 
 
-def check_answers(
-    day_number, part1_answer, part2_answer, part1_solution=None, part2_solution=None
-):
-    print(
-        "Day {} Part 1: expected = {} ; answered = {}".format(
-            day_number, part1_solution, part1_answer
-        )
+def check_answer(day_number, part_number, answer, solution=None, always_print=False):
+    if (solution is not None) and (answer is not None):
+        try:
+            solution = type(answer)(solution)
+        except ValueError:
+            pass
+    debug_msg = "Day {} Part {}: expected = {} ; answered = {}".format(
+        day_number, part_number, repr(solution), repr(answer)
     )
-    print(
-        "Day {} Part 2: expected = {} ; answered = {}".format(
-            day_number, part2_solution, part2_answer
-        )
-    )
+    try:
+        assert answer == solution, debug_msg
+        if always_print:
+            print(debug_msg)
+    except AssertionError as err:
+        print(err)
+        return False
+    return True
 
 
 def get_args():
@@ -77,6 +83,12 @@ def get_args():
         nargs="+",
         help="Additional parameters to pass to the solver (when a single day is being solved).",
     )
+    parser.add_argument(
+        "-p",
+        "--always_print",
+        action="store_true",
+        help="Always print the expected solutions VS the actual answers .",
+    )
 
     args = parser.parse_args()
     if args.year is None:
@@ -92,15 +104,32 @@ def get_args():
 def main():
     args = get_args()
 
+    result = True
     for day in args.days:
-        input_lines = load_input(INPUT_PATH.format(year=args.year, day=day))
+        try:
+            input_lines = load_input(INPUT_PATH.format(year=args.year, day=day))
+        except FileNotFoundError:
+            print("Not solved day {}".format(day))
+            continue
+
         part1_answer, part2_answer = solve_puzzle(
-            args.year, day, input_lines, *args.additional_params
+            args.year,
+            day,
+            input_lines,
+            *args.additional_params,
+            always_print=args.always_print
         )
         part1_solution, part2_solution = load_solution(
             SOLUTION_PATH.format(year=args.year, day=day)
         )
-        check_answers(day, part1_answer, part2_answer, part1_solution, part2_solution)
+        for i, (answer, solution) in enumerate(
+            ((part1_answer, part1_solution), (part2_answer, part2_solution))
+        ):
+            result = result and check_answer(
+                day, i, answer, solution, always_print=args.always_print
+            )
+
+    sys.exit(0 if result else 1)
 
 
 if __name__ == "__main__":
