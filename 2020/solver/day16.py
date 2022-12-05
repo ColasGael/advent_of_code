@@ -1,6 +1,6 @@
 import re
 
-import intervals
+import intervals  # type: ignore
 import numpy as np
 
 

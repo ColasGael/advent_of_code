@@ -27,7 +27,7 @@ def main(input_lines: List[str]) -> Tuple[int, int]:
 
 def compute_score(responses: Games, outcomes: Games) -> int:
     scores: Games = (responses + 1) + outcomes * 3
-    return np.sum(scores)
+    return int(np.sum(scores))
 
 
 def part1_get_responses_outcomes(game_rounds: Games) -> Tuple[Games, Games]:

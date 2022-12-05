@@ -1,3 +1,10 @@
 #!/bin/bash
 
 pylint $(git ls-files '*.py') --ignore="__init__.py"
+
+for year in 20* ; do
+    echo "Static type checking for year $year"
+    cd ${year}/solver/
+    mypy $(git ls-files '*.py')
+    cd -
+done
