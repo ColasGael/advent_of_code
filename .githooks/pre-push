@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Fail if any check fails
+set -e
+
 pylint $(git ls-files '*.py') --ignore="__init__.py"
 
 for year in 20* ; do
