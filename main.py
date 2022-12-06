@@ -123,10 +123,11 @@ def main():
             SOLUTION_PATH.format(year=args.year, day=day)
         )
         for i, (answer, solution) in enumerate(
-            ((part1_answer, part1_solution), (part2_answer, part2_solution))
+            ((part1_answer, part1_solution), (part2_answer, part2_solution)), start=1
         ):
-            result = result and check_answer(
-                day, i, answer, solution, always_print=args.always_print
+            result = (
+                check_answer(day, i, answer, solution, always_print=args.always_print)
+                and result
             )
 
     sys.exit(0 if result else 1)
