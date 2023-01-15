@@ -117,7 +117,7 @@ def solve(
     return position
 
 
-def move(  # pylint: disable=too-many-branches
+def move(
     position: Position, instruction: Instruction, board_map: Map, wrap_func: WrapFunc
 ) -> Position:
     if isinstance(instruction, str):

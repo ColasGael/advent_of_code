@@ -21,9 +21,7 @@ def main(input_lines: List[str], sand_x=500) -> Tuple[int, int]:
     return part1_answer, part2_answer
 
 
-def parse_cave_map(  # pylint: disable=too-many-locals
-    input_lines: List[str], sand_x: int
-) -> Tuple[Map, int]:
+def parse_cave_map(input_lines: List[str], sand_x: int) -> Tuple[Map, int]:
     min_x: int = sand_x
     max_x: int = sand_x
     max_y: int = 0

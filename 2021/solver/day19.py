@@ -62,9 +62,7 @@ COORDINATE_TRANSFORMS = [
 ]
 
 
-def find_all_beacons(
-    sensors, min_num_matching_beacons
-):  # pylint: disable=too-many-locals
+def find_all_beacons(sensors, min_num_matching_beacons):
     # Indicate the sensor absolute pose
     sensor_positions = [None] * len(sensors)
 
@@ -75,7 +73,7 @@ def find_all_beacons(
     sensor_positions[0] = (0, 0, 0)
     open_sensors.append(0)
 
-    while len(open_sensors) > 0:  # pylint: disable=too-many-nested-blocks
+    while len(open_sensors) > 0:
         j = open_sensors.pop()
         current_sensor = sensors[j]
 

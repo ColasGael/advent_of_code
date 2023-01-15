@@ -61,7 +61,7 @@ def get_jet_pattern(
     return jet_pattern
 
 
-def solve(  # pylint: disable=too-many-locals
+def solve(
     rock_types: List[RockSquares],
     jet_pattern: List[int],
     max_num_rocks: int,

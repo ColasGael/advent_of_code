@@ -38,7 +38,7 @@ def main(input_lines: List[str]) -> Tuple[int, int]:
     return part1_answer, part2_answer
 
 
-def parse_valley_map(  # pylint: disable=too-many-arguments, too-many-locals
+def parse_valley_map(
     input_lines: List[str],
     empty_char: str = ".",
     up_char: str = "^",

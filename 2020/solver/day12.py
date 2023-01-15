@@ -60,7 +60,7 @@ def part1_apply_action(action, value, cardinal_points, position, orientation):
     return position, orientation
 
 
-def part2_apply_action(  # pylint: disable=too-many-arguments
+def part2_apply_action(
     action, value, cardinal_points, position, orientation, waypoint_position
 ):
     if action == cardinal_points[0]:

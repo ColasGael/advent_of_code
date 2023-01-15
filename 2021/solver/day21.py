@@ -38,9 +38,7 @@ def play_deterministic(start_positions, win_score=1000, num_dice_roll_per_turn=3
     return scores, num_dice_roll
 
 
-def play_quantic(
-    player1_start_position, player2_start_position, win_score=21
-):  # pylint: disable=too-many-locals
+def play_quantic(player1_start_position, player2_start_position, win_score=21):
     num_wins = [0, 0]
 
     open_games = [(1, player1_start_position, player2_start_position, 0, 0)]

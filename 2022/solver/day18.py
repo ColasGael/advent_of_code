@@ -57,7 +57,7 @@ def compute_surfaces(lava_droplets: List[Coord]) -> Tuple[int, int]:
     return total_visible_surface, total_exterior_surface
 
 
-def cluster_cubes(  # pylint: disable=too-many-locals,too-many-branches
+def cluster_cubes(
     cubes: List[Coord], allow_diagonal: bool = True
 ) -> List[Tuple[Cluster, int]]:
     # Sort the cubes for efficiency
@@ -69,7 +69,7 @@ def cluster_cubes(  # pylint: disable=too-many-locals,too-many-branches
     cluster_contact_surfaces: Dict[int, int] = {}
 
     # Cluster the cubes
-    for i, this_cube in enumerate(cubes):  # pylint: disable=too-many-nested-blocks
+    for i, this_cube in enumerate(cubes):
         if this_cube not in cluster_assignments:
             max_cluster_id += 1
             cluster_assignments[this_cube] = max_cluster_id

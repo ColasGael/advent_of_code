@@ -66,7 +66,7 @@ def parse_sensor_beacon_coords(input_lines: List[str]) -> List[Tuple[Coord, Coor
     return sensor_beacon_coords
 
 
-def check_row_coverage(  # pylint: disable=too-many-locals
+def check_row_coverage(
     sensor_beacon_coords: List[Tuple[Coord, Coord]], row_y: int, include_beacon=False
 ) -> Tuple[I.Interval, int]:
     """Compute the portion of the row at y=row_y covered by the sensor.

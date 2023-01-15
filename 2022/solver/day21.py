@@ -79,7 +79,6 @@ def find_root_monkey_number(
     return dfs(monkey_root)
 
 
-# pylint: disable=too-many-locals,too-many-branches
 def find_your_number(
     monkey_root: str, you: str, monkey_jobs: Dict[Monkey, MonkeyJob]
 ) -> int:
@@ -182,9 +181,6 @@ def find_your_number(
 
     # Should not happen
     return monkey_numbers[you]
-
-
-# pylint: enable=too-many-locals,too-many-branches
 
 
 def reverse_operation(operation: str) -> str:

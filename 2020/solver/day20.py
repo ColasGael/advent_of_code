@@ -119,7 +119,7 @@ def check_assumptions(connections):
     return is_valid
 
 
-def find_connections(tiles):  # pylint: disable=too-many-locals
+def find_connections(tiles):
     borders = {tile_id: get_borders(tiles[tile_id]) for tile_id in tiles.keys()}
     connections = {tile_id: {} for tile_id in tiles.keys()}
 
@@ -127,7 +127,7 @@ def find_connections(tiles):  # pylint: disable=too-many-locals
     first_tile_id = list(tiles.keys())[0]
     todo_tiles.append(first_tile_id)
     is_done_tile = {tile_id: False for tile_id in tiles.keys()}
-    while todo_tiles:  # pylint: disable=too-many-nested-blocks
+    while todo_tiles:
         this_tile_id = todo_tiles.popleft()
         this_tile_borders = borders[this_tile_id]
         is_done_tile[this_tile_id] = True

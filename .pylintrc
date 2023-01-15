@@ -1,8 +1,13 @@
 [MESSAGES CONTROL]
 
 disable=
+    consider-using-f-string,
+    duplicate-code,
     missing-module-docstring,
     missing-function-docstring,
     missing-class-docstring,
-    consider-using-f-string,
-    duplicate-code
+    too-many-arguments,
+    too-many-branches,
+    too-many-locals,
+    too-many-nested-blocks,
+    too-many-statements

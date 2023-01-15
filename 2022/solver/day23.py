@@ -50,9 +50,7 @@ def converge(positions: List[Coord], start_round_idx: int = 0) -> int:
     return round_idx + 1
 
 
-def step(  # pylint: disable=too-many-locals,too-many-branches,too-many-statements
-    round_idx: int, positions: List[Coord]
-) -> bool:
+def step(round_idx: int, positions: List[Coord]) -> bool:
     # Sort the positions to make it easy to find an elf's neighbors
     positions.sort(key=sum)
 
