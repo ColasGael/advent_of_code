@@ -12,7 +12,7 @@ def main(input_lines: List[str]) -> Tuple[str, str]:
     snafu_nums: List[SnafuNum] = [list(input_line) for input_line in input_lines]
 
     part1_answer: str = "".join(compute_sum_snafu(snafu_nums))
-    part2_answer: str = "empty"
+    part2_answer: str = "unspecified"
 
     return part1_answer, part2_answer
 

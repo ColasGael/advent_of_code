@@ -16,8 +16,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Validate all the solved puzzles' solutions
+      env:
+        ADVENT_OF_CODE_SESSION: ${{ secrets.ADVENT_OF_CODE_SESSION }}
       run: |
         for year in 20* ; do
           echo "Validating solutions for year $year"
-          ./main.py -y $year
+          ./main.py -y $year --mode_ci --session ${ADVENT_OF_CODE_SESSION}
         done

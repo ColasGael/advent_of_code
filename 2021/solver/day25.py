@@ -2,7 +2,7 @@ def main(input_lines):
     ocean_map = parse_map(input_lines)
 
     part1_answer = converge(ocean_map)
-    part2_answer = 49  # stars
+    part2_answer = "unspecified"
 
     return part1_answer, part2_answer
 
